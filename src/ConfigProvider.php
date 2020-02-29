@@ -21,6 +21,12 @@ class ConfigProvider
             'dependencies' => [
                 \Lengbin\YiiDb\ConnectionInterface::class => \Lengbin\Hyperf\YiiDb\Connection::class,
             ],
+            'publish' => [
+                [
+                    'id' => 'hyperf-yii-db',
+                    'description' => 'The config for hyperf yii bd.',
+                ],
+            ],
         ];
     }
 }

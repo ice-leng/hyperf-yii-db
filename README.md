@@ -32,6 +32,8 @@ Publish
 -------
 ```php
       
+php ./bin/hyperf.php vendor:publish lengbin/hyperf-yii-db
+
 ```
 
 Usage
