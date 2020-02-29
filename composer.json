@@ -1,8 +1,8 @@
 {
-  "name": "lengbin/hyperf-jwt",
-  "description": "hyperf jwt",
+  "name": "lengbin/hyperf-yii-db",
+  "description": "hyperf yii db",
   "type": "library",
-  "keywords": ["php", "hyperf","extension","jwt", "hyperf-jwt"],
+  "keywords": ["php", "hyperf","extension","yii db", "hyperf-yii-db"],
   "license": "MIT",
   "require": {
     "php": ">=7.2.0",
