@@ -27,25 +27,15 @@ lengbin/hyperf-yii-db": "*"
 to the require section of your `composer.json` file.
 
 
-Request [详情](https://github.com/ice-leng/jwt)
--------
-```
-"lengbin/hyperf-yii-db": "dev-master"
-```
-
 
 Publish
 -------
 ```php
       
-
-
 ```
 
 Usage
 -----
 ```php
-
-
 
 ```
