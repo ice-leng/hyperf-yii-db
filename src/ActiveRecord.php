@@ -27,7 +27,7 @@ class ActiveRecord extends AbstractActiveRecord
     /**
      * @return \Psr\Container\ContainerInterface
      */
-    protected function getContainer()
+    protected static function getContainer()
     {
         return ApplicationContext::getContainer();
     }
@@ -50,6 +50,15 @@ class ActiveRecord extends AbstractActiveRecord
     protected function saveAfterDelete($event)
     {
         $this->eventDispatcher()->dispatch($event);
+    }
+
+    /**
+     * db
+     * @return ConnectionInterface
+     */
+    public static function getDb()
+    {
+        return static::getContainer()->get(ConnectionInterface::class);
     }
 
     /**
