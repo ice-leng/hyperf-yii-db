@@ -50,6 +50,9 @@ ActiveRecord
 ------------
 ```php
       
+    Query 
+    use Lengbin\Hyperf\YiiDb\Query;
+
     Model 可以继承 3 中 ActiveRecord
     //基于hy 将添加后，更新后，删除后的事件
     //基于hy 雪花算法 生成id 复写
@@ -65,6 +68,30 @@ ActiveRecord
 Usage
 -----
 ```php
+// 重新 query
+<?php
+
+namespace Lengbin\Hyperf\YiiDb;
+
+use Lengbin\YiiDb\ConnectionInterface;
+
+class Query extends \Lengbin\YiiDb\Query
+{
+
+    public function __construct(array $config = [], ConnectionInterface $connection = null)
+    {
+        if ($connection === null) {
+            $connection = make(ConnectionInterface::class);
+        }
+        parent::__construct($config, $connection);
+    }
+
+}
+
+
+
+
+
 // 重写 connection， 已实现
 <?php
     
