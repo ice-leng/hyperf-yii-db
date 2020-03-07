@@ -13,7 +13,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 class ActiveRecord extends AbstractActiveRecord
 {
 
-    public function __construct(array $config = [], ConnectionInterface $connection = null)
+    public function __construct(ConnectionInterface $connection = null, array $config = [])
     {
         // 可以直接在这里实现，添加后，更新后，删除后的事件
         // 比如 操作日志，其他日志
@@ -21,7 +21,7 @@ class ActiveRecord extends AbstractActiveRecord
         $this->on(self::AFTER_INSERT, [$this, 'saveAfterInsert']);
         $this->on(self::AFTER_UPDATE, [$this, 'saveAfterUpdate']);
         $this->on(self::AFTER_DELETE, [$this, 'saveAfterDelete']);
-        parent::__construct($config, $connection);
+        parent::__construct($connection, $config);
     }
 
     /**

@@ -7,12 +7,12 @@ use Lengbin\YiiDb\ConnectionInterface;
 class Query extends \Lengbin\YiiDb\Query
 {
 
-    public function __construct(array $config = [], ConnectionInterface $connection = null)
+    public function __construct(ConnectionInterface $connection = null, array $config = [])
     {
         if ($connection === null) {
             $connection = make(ConnectionInterface::class);
         }
-        parent::__construct($config, $connection);
+        parent::__construct($connection, $config);
     }
 
 }
