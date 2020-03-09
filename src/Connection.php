@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lengbin\Hyperf\YiiDb;
 
+use Hyperf\Contract\ConfigInterface;
 use Hyperf\DbConnection\Db;
 use Hyperf\Logger\LoggerFactory;
 use Psr\Container\ContainerInterface;
@@ -16,7 +17,7 @@ class Connection extends \Lengbin\YiiDb\Connection
      */
     public $db;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, $configKey = 'default')
     {
         // schemaCache
         $this->enableSchemaCache = true;
@@ -24,16 +25,34 @@ class Connection extends \Lengbin\YiiDb\Connection
 
         // logger
         $logger = $container->get(LoggerFactory::class)->get();
-        parent::__construct(null, $logger);
+
+        // dsn
+        $dsn = $this->getDsn($container, $configKey);
+        parent::__construct($dsn, $logger);
     }
 
-    public function init()
+    /**
+     * @param ContainerInterface $container
+     */
+    protected function getDsn(ContainerInterface $container, $configKey)
     {
-        $pool = 'default';
-        $this->db = Db::connection($pool);
-        $this->username = $pool;
+        $config = $container->get(ConfigInterface::class)->get('databases.' . $configKey);
+
+        $this->db = Db::connection($configKey);
         $this->pdo = $this->getMasterPdo();
-        $this->setDriverName('mysql');
+        $this->setDriverName($config['driver']);
+
+        $this->username = $config['username'];
+        $this->password = $config['password'];
+        $this->tablePrefix = $config['prefix'];
+
+        return [
+            'driver'  => $config['driver'],
+            'host'    => $config['host'],
+            'dbname'  => $config['database'],
+            'charset' => $config['charset'],
+            'port'    => $config['port'],
+        ];
     }
 
     /**
