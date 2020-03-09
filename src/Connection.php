@@ -33,6 +33,7 @@ class Connection extends \Lengbin\YiiDb\Connection
 
     /**
      * @param ContainerInterface $container
+     * @param string             $configKey
      */
     protected function getDsn(ContainerInterface $container, $configKey)
     {
