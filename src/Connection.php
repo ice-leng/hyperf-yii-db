@@ -24,7 +24,7 @@ class Connection extends \Lengbin\YiiDb\Connection
         $this->schemaCache = $container->get(CacheInterface::class);
 
         // logger
-        $logger = $container->get(LoggerFactory::class)->get();
+        $logger = $container->get(LoggerFactory::class)->get('db');
 
         // dsn
         $dsn = $this->getDsn($container, $configKey);
