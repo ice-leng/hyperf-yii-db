@@ -9,6 +9,7 @@ use Lengbin\YiiDb\ConnectionInterface;
 use Hyperf\Snowflake\IdGeneratorInterface;
 use Hyperf\Utils\ApplicationContext;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class ActiveRecord extends AbstractActiveRecord
 {
@@ -27,27 +28,27 @@ class ActiveRecord extends AbstractActiveRecord
     /**
      * @return \Psr\Container\ContainerInterface
      */
-    protected static function getContainer()
+    protected static function getContainer(): ContainerInterface
     {
         return ApplicationContext::getContainer();
     }
 
-    protected function eventDispatcher()
+    protected function eventDispatcher(): EventDispatcherInterface
     {
         return $this->getContainer()->get(EventDispatcherInterface::class);
     }
 
-    protected function saveAfterInsert($event)
+    protected function saveAfterInsert($event): void
     {
         $this->eventDispatcher()->dispatch($event);
     }
 
-    protected function saveAfterUpdate($event)
+    protected function saveAfterUpdate($event): void
     {
         $this->eventDispatcher()->dispatch($event);
     }
 
-    protected function saveAfterDelete($event)
+    protected function saveAfterDelete($event): void
     {
         $this->eventDispatcher()->dispatch($event);
     }
@@ -56,13 +57,14 @@ class ActiveRecord extends AbstractActiveRecord
      * db
      * @return ConnectionInterface
      */
-    public static function getDb()
+    public static function getDb(): ConnectionInterface
     {
         return static::getContainer()->get(ConnectionInterface::class);
     }
 
     /**
      * 使用 hy 雪花算法
+     *
      * @param int $type
      * @param int $service_no
      *
@@ -72,6 +74,22 @@ class ActiveRecord extends AbstractActiveRecord
     {
         $generator = $this->getContainer()->get(IdGeneratorInterface::class);
         return $generator->generate();
+    }
+
+    /**
+     * @param     $model
+     * @param int $pageSize
+     *
+     * @return array
+     * @throws \Lengbin\YiiDb\Exception\Exception
+     * @throws \Lengbin\YiiDb\Exception\InvalidConfigException
+     * @throws \Lengbin\YiiDb\Exception\NotSupportedException
+     * @throws \Throwable
+     */
+    public function getPage($model, $pageSize = 20): array
+    {
+        $params = $this->getContainer()->get(ServerRequestInterface::class)->getQueryParams();
+        return parent::page($params, $model, $pageSize);
     }
 
 }
