@@ -8,6 +8,7 @@ use Lengbin\YiiDb\ActiveRecord\AbstractActiveRecord;
 use Lengbin\YiiDb\ConnectionInterface;
 use Hyperf\Snowflake\IdGeneratorInterface;
 use Hyperf\Utils\ApplicationContext;
+use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -26,7 +27,7 @@ class ActiveRecord extends AbstractActiveRecord
     }
 
     /**
-     * @return \Psr\Container\ContainerInterface
+     * @return Psr\Container\ContainerInterface
      */
     protected static function getContainer(): ContainerInterface
     {
@@ -94,5 +95,4 @@ class ActiveRecord extends AbstractActiveRecord
         }
         return parent::page($model, $pageSize, $params);
     }
-
 }
