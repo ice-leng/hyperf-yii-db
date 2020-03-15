@@ -77,8 +77,9 @@ class ActiveRecord extends AbstractActiveRecord
     }
 
     /**
-     * @param     $model
-     * @param int $pageSize
+     * @param       $model
+     * @param int   $pageSize
+     * @param array $params
      *
      * @return array
      * @throws \Lengbin\YiiDb\Exception\Exception
@@ -86,10 +87,12 @@ class ActiveRecord extends AbstractActiveRecord
      * @throws \Lengbin\YiiDb\Exception\NotSupportedException
      * @throws \Throwable
      */
-    public function getPage($model, $pageSize = 20): array
+    public function page($model, $pageSize = 20, array $params = []): array
     {
-        $params = $this->getContainer()->get(ServerRequestInterface::class)->getQueryParams();
-        return parent::page($params, $model, $pageSize);
+        if ($params === []) {
+            $params = $this->getContainer()->get(ServerRequestInterface::class)->getQueryParams();
+        }
+        return parent::page($model, $pageSize, $params);
     }
 
 }
